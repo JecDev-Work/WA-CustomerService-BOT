@@ -1,27 +1,33 @@
-const qrcode = require('qrcode');
+const qrCode = require('qrcode');
 const { Client } = require('whatsapp-web.js');
-const client = new Client();
 const sharedEmitter = require('../utils/eventEmitter');
 
+const client = new Client();
 
 const initializeWhatsAppClient = () => {
     client.on('qr', (qr) => {
-        const qrCodeImage = qrcode.toDataURL(qr, (err, url) => {
+        qrCode.toDataURL(qr, (err, url) => {
             if (err) {
-                console.error('Error generating QR code:', err);
+                console.log('Error generating QR code:', err);
             } else {
                 console.log('QR Code generated:', url);
 
-                sharedEmitter.emit('qr', qrCodeImage);
-                sharedEmitter.emit('statusUpdate', 'Silakan pi  dai QR Code...');
+                sharedEmitter.emit('InfoClient', {
+                    qrImage: url,
+                    clientStatus: 'Silakan pindai QR Code...',
+                    isClientReady: false
+                });
             }
         });
-
     });
 
     client.on('ready', () => {
         console.log('WhatsApp client is ready!');
-        sharedEmitter.emit('status_client', 'ready', true);
+        sharedEmitter.emit('InfoClient', {
+            qrImage: null,
+            clientStatus: 'Client is ready!',
+            isClientReady: true
+        });
     });
 
     client.initialize()
