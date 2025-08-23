@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const sharedEmitter = require('../utils/eventEmitter');
-const port = 3010;
+const port = 3002;
 
 let qrImage = '';
 let clientStatus = 'Mohon Menunggu...';

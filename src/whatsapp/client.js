@@ -1,5 +1,6 @@
 const qrCode = require('qrcode');
 const { Client } = require('whatsapp-web.js');
+const { handlerMessage } = require('../handlers/message-handler');
 const sharedEmitter = require('../utils/eventEmitter');
 
 const client = new Client();
@@ -30,6 +31,10 @@ const initializeWhatsAppClient = () => {
         });
     });
 
+    client.on('message', (message) => {
+        handlerMessage(client, message);
+    });
+    
     client.initialize()
 };
 
