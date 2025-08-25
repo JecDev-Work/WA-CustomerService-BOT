@@ -5,7 +5,7 @@ const port = 3002;
 
 let qrImage = '';
 let clientStatus = 'Mohon Menunggu...';
-let isClientReady = null;
+let isClientReady = false;
 
 const WebAppInterface = () => {
 
